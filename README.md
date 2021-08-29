@@ -1,6 +1,8 @@
 # pilot-datebook
 Update of pilot-datebook to pilot-link 0.12
 
+Warning this update is not especially thorough, there may have been unidentified bugs introduced by jumping to a much newer GCC.
+
 Original source: https://www.mhessler.de/pilot-datebook/index.en.html
 
 

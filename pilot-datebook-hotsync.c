@@ -781,7 +781,7 @@ hotsync_read_specific_row (struct hotsync_file_data * in_file, struct row_data *
 
   /* Read from file */
   if (dlp_ReadRecordByIndex(in_file->socket, in_file->database,
-			    record_num, buffer, &uid, &buffer_len,
+			    record_num, buffer, &uid, 
 			    &attributes, &category) < 0) {
     warn_message("Can not read record <%d> from input file\n\n", record_num);
     setRowIsValid(row, FALSE);

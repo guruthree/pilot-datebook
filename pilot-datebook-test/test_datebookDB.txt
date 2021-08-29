@@ -1,6 +1,6 @@
 name=DatebookDB
 flags=0x8 BACKUP
-misc_flags=0x0
+misc_flags=0x40
 type=DATA
 creator=date
 version=0

@@ -431,8 +431,8 @@ pdb_write_row (struct pdb_file_data * out_file, struct header_data * header, str
   unsigned long uid;
   int record_num;
 
-  unsigned char buffer [0xffff];
-  unsigned int buffer_len = 0;
+  pi_buffer_t *buffer;
+  buffer 	= pi_buffer_new (0xffff);
   
 
   /* Debug */
@@ -450,8 +450,9 @@ pdb_write_row (struct pdb_file_data * out_file, struct header_data * header, str
 
 
   /* Write datebook row data */
-  buffer_len = pack_Appointment(&a, buffer, sizeof(buffer));
-  if (pi_file_append_record (out_file->pf, &buffer, buffer_len, attributes, category, uid))
+  pack_Appointment(&a, buffer, datebook_v1);
+  pi_file_append_record (out_file->pf, buffer->data, buffer->used, attributes, category, uid);
+  if (out_file->pf->err)
     error_message("Write of datebook application row %d to output file failed!\n\n",
 		  record_num);
 
@@ -593,9 +594,16 @@ pdb_read_specific_row (struct pdb_file_data * in_file, struct row_data * row, in
 			   &attributes, &category, &uid) < 0)
     error_message("Can not read record <%d> from input file\n\n", record_num);
 
+  // copy into correctly formatted pi_buffer_t
+  pi_buffer_t *buffer2;
+  buffer2 = pi_buffer_new (0xffff);
+
+  memcpy(buffer2->data, buffer, buffer_len);
+  buffer2->used = buffer_len;
+
   /* Convert data */
   /* (ensure to later free appointment data after usage) */
-  unpack_Appointment(&a, buffer, buffer_len);
+  unpack_Appointment(&a, buffer2, datebook_v1);
 
   /* Set datebook data */
   setRowRecordNum(row, record_num);
@@ -613,7 +621,7 @@ pdb_read_specific_row (struct pdb_file_data * in_file, struct row_data * row, in
     int buffer_len2 = 0;
     int i;
 
-    buffer_len2 = pack_Appointment(&a, buffer2, sizeof(buffer2));
+    buffer_len2 = pack_Appointment(&a, buffer2, datebook_v1);
     if (buffer_len != buffer_len2) {
     fprintf(stderr, "Warning: input record <%d> (uid=%lu): pack buffer length differs!\n",
     record_num, uid);

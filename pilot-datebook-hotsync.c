@@ -436,8 +436,8 @@ hotsync_write_row (struct hotsync_file_data * out_file, struct header_data * hea
   unsigned long new_uid;
   int record_num;
 
-  unsigned char buffer [0xffff];
-  unsigned int buffer_len = 0;
+  pi_buffer_t *buffer;
+  buffer 	= pi_buffer_new (0xffff);
   
 
   /* Debug */
@@ -458,11 +458,11 @@ hotsync_write_row (struct hotsync_file_data * out_file, struct header_data * hea
 
 
   /* Write datebook row data */
-  buffer_len = pack_Appointment(&a, buffer, sizeof(buffer));
+  pack_Appointment(&a, buffer, datebook_v1);
   new_uid = 0;
   if (dlp_WriteRecord (out_file->socket, out_file->database,
 		       attributes, uid, category,
-		       buffer, buffer_len, 
+		       buffer->data, buffer->used, 
 		       &new_uid) < 0)
     error_message("Write of datebook application row %d to output file failed!\n\n",
 		  record_num);
@@ -789,7 +789,7 @@ hotsync_read_specific_row (struct hotsync_file_data * in_file, struct row_data *
   else {
     /* Convert data */
     /* (ensure to later free appointment data after usage) */
-    unpack_Appointment(&a, buffer, buffer_len);
+    unpack_Appointment(&a, buffer, datebook_v1);
     
     /* Set datebook data */
     setRowRecordNum(row, record_num);
@@ -811,7 +811,7 @@ hotsync_read_specific_row (struct hotsync_file_data * in_file, struct row_data *
     int buffer_len2 = 0;
     int i;
 
-    buffer_len2 = pack_Appointment(&a, buffer2, sizeof(buffer2));
+    buffer_len2 = pack_Appointment(&a, buffer2, datebook_v1);
     if (buffer_len != buffer_len2) {
     info_message("Warning: input record <%d> (uid=%lu): pack buffer length differs!\n",
     record_num, uid);

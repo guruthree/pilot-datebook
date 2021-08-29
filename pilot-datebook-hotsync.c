@@ -553,15 +553,13 @@ hotsync_open (struct hotsync_file_data * file, struct header_data * header, enum
     buffer[0] = '\0';
 
   file->file_is_open = FALSE;
-  addr.pi_family = PI_AF_SLP;
-  strcpy(addr.pi_device, device);
 
   /* Open socket */
-  if (!(file->socket = pi_socket(PI_AF_SLP, PI_SOCK_STREAM, PI_PF_PADP)))
+  if (!(file->socket = pi_socket(PI_AF_PILOT, PI_SOCK_STREAM, PI_PF_DLP)))
     error_message("Can not open socket%s\n", buffer);
 
   /* Bind */
-  ret = pi_bind(file->socket, (struct sockaddr*)&addr, sizeof(addr));
+  ret = pi_bind(file->socket, device);
   if(ret == -1)
     error_message("\n   Unable to bind to port %s%s\n", device, buffer);
 

@@ -76,6 +76,13 @@ EXPECT2_FILE=update_expect2.txt
 echo -n "Test2 (${TEST2}): "
 
 cat > ${EXPECT2_FILE} <<EOI
+APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
+External Meeting
+
+APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
+Internal Meeting
+ALARM <5 min before>
+
 UNTIMED_EVENT <5849139> on <12 may 1997>:
 category=2 ()
 *1971 Geburtstag
@@ -83,13 +90,6 @@ REPEAT from <12 may 1997> until <forever>: <yearly> on <may 12>
 ALARM <2 days before>
 NOTE:
 ##@@B@@@@
-
-APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
-External Meeting
-
-APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
-Internal Meeting
-ALARM <5 min before>
 
 EOI
 
@@ -118,6 +118,13 @@ EXPECT3_FILE=update_expect3.txt
 echo -n "Test3 (${TEST3}): "
 
 cat > ${EXPECT3_FILE} <<EOI
+APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
+Internal Meeting
+ALARM <5 min before>
+
+APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
+External Meeting
+
 UNTIMED_EVENT <5849139> on <12 may 1997>:
 category=2 ()
 *1971 Geburtstag
@@ -125,13 +132,6 @@ REPEAT from <12 may 1997> until <forever>: <yearly> on <may 12>
 ALARM <2 days before>
 NOTE:
 ##@@B@@@@
-
-APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
-Internal Meeting
-ALARM <5 min before>
-
-APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
-External Meeting
 
 EOI
 
@@ -160,13 +160,6 @@ EXPECT4_FILE=update_expect4.txt
 echo -n "Test4 (${TEST4}): "
 
 cat > ${EXPECT4_FILE} <<EOI
-APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
-External Meeting
-
-APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
-Internal Meeting
-ALARM <5 min before>
-
 UNTIMED_EVENT <5849139> on <12 may 1997>:
 category=2 ()
 *1971 Geburtstag
@@ -174,6 +167,13 @@ REPEAT from <12 may 1997> until <forever>: <yearly> on <may 12>
 ALARM <2 days before>
 NOTE:
 ##@@B@@@@
+
+APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
+External Meeting
+
+APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
+Internal Meeting
+ALARM <5 min before>
 
 EOI
 
@@ -202,13 +202,6 @@ EXPECT5_FILE=update_expect5.txt
 echo -n "Test5 (${TEST5}): "
 
 cat > ${EXPECT5_FILE} <<EOI
-APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
-Internal Meeting
-ALARM <5 min before>
-
-APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
-External Meeting
-
 UNTIMED_EVENT <5849139> on <12 may 1997>:
 category=2 ()
 *1971 Geburtstag
@@ -216,6 +209,13 @@ REPEAT from <12 may 1997> until <forever>: <yearly> on <may 12>
 ALARM <2 days before>
 NOTE:
 ##@@B@@@@
+
+APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:00>:
+Internal Meeting
+ALARM <5 min before>
+
+APPOINTMENT <5849146> from <12 dec 1997 16:45> to <12 dec 1997 17:50>:
+External Meeting
 
 EOI
 

@@ -109,14 +109,6 @@ EOI
 
 
 cat > ${EXPECT5_FILE} <<EOI
-UNTIMED_EVENT <5849139> on <12 may 1997>:
-category=2 ()
-*1971 Geburtstag
-REPEAT from <12 may 1997> until <forever>: <yearly> on <may 12>
-ALARM <6 days before>
-NOTE:
-##@@B@@@@
-
 APPOINTMENT <5849151> from <12 dec 1997 11:00> to <12 dec 1997 12:03>:
 Internal Meeting
 ALARM <15 min before>
@@ -131,6 +123,14 @@ External Meeting
 
 APPOINTMENT <5849146> from <13 dec 1997 16:45> to <13 dec 1997 18:48>:
 External Meeting 'Test2
+
+UNTIMED_EVENT <5849139> on <12 may 1997>:
+category=2 ()
+*1971 Geburtstag
+REPEAT from <12 may 1997> until <forever>: <yearly> on <may 12>
+ALARM <6 days before>
+NOTE:
+##@@B@@@@
 
 EOI
 

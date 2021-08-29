@@ -18,7 +18,8 @@ extern void joblist_abort_all(void);
 const int DATEBOOK_MAX_CATEGORIES = 16;
 
 const char *Weekday[7] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
-const int WEEKDAY_LEN = sizeof(Weekday[0]);
+//const int WEEKDAY_LEN = sizeof(Weekday[0]);
+const int WEEKDAY_LEN = 3;
 const char WEEKDAY_UNKNOWN[] = "unknown_weekday";
 
 /*

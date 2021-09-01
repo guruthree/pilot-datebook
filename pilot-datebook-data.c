@@ -1257,6 +1257,53 @@ value_init (struct value_data * value, const char * value_start, const char * va
     }
     break;
 
+  case DATEBOOK_FIELD_TIMES:
+    {
+      int exception_num = 0;
+      len = value_end - value_start;
+
+      for (int i = 0; i < len; i++) {
+        if (value_start[i] == ';') exception_num++;
+      }
+
+
+
+      if (exception_num == 0) {
+        // nothing to init if there's nothing
+        value->literal.lit_times = NULL;
+    //    for (int i = 0; i < exception_num; i++) {
+    //	    time_t t;
+    //	    t = 0;
+    //	    value->literal.lit_times[i] = *localtime(&t);
+    //    }
+      }
+      else {
+        value->literal.lit_times = (struct tm*)calloc(exception_num, sizeof(struct tm));
+        printf("value start %i %s %i\n", len, value_start, exception_num);
+        int last_pos = 0, exception_at = 0;
+        for (int i = 0; i < len; i++) {
+          if (value_start[i] == ';') {
+            memset(date_buffer, 0, sizeof(char)*sizeof(date_buffer));
+            strncpy(date_buffer, value_start + last_pos, i - last_pos);
+            printf("init value %s\n", date_buffer);
+            last_pos = i+1;
+
+	          time_t t;
+            t = read_iso_time_str1 (date_buffer);
+            if (t == -1) {
+              warn_message("Can not parse date/time <%s>\n\n",
+		             date_buffer);
+              break;
+            }
+	          value->literal.lit_times[exception_at++] = *localtime(&t);
+          }
+        }
+      }
+
+      value->type = DATEBOOK_FIELD_TIMES;
+    }
+    break;
+
   default:
     error_message("Do not know how to handle data type <%d>\n",
 		  value->type);

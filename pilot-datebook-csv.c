@@ -18,7 +18,7 @@
 
 
 /* Constants */
-const char CSV_DEFAULT_FORMAT[]="uid,attributes,category,untimed,beginDate,beginTime,endDate,endTime,description,note,alarm,advance,advanceUnit,repeatType,repeatForever,repeatEnd,repeatFrequency,repeatDay,repeatWeekdays,repeatWeekstart";
+const char CSV_DEFAULT_FORMAT[]="uid,attributes,category,untimed,beginDate,beginTime,endDate,endTime,description,note,alarm,advance,advanceUnit,repeatType,repeatForever,repeatEnd,repeatFrequency,repeatDay,repeatWeekdays,repeatWeekstart,repeatExceptionNum,repeatException";
 const char CSV_OUTLOOK_FORMAT[]="description,beginDate,beginTime,endDate,endTime,untimed,note";
 const char CSV_OUTLOOK_HEADER[]="\"Subject\",\"Start Date\",\"Start Time\",\"End Date\",\"End Time\",\"All day event\",\"Description\"";
 const char CSV_OUTLOOK_NAME[]="Outlook";
@@ -1561,6 +1561,11 @@ csv_row_read(struct csv_file_data * file, struct csv_field_data * csv_field, str
     case DATEBOOK_FIELD_STR:
       value.literal.lit_str = NULL;
       break;
+
+    case DATEBOOK_FIELD_TIMES:
+      // dont's tart with any times excepted by default
+      value.literal.lit_times = NULL;
+      exit(0);
 
     default:
       error_message("Can not handle unknown field data type\n");

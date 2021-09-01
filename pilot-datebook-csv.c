@@ -1452,7 +1452,54 @@ csv_row_write(struct csv_file_data * file, struct csv_field_data * csv_field, st
     }
     break;
 
+  case DATEBOOK_FIELD_TIMES:
+    {
+      int exception_num;
+      exception_num = getRowRepeatExceptionNum(row);
+      if (exception_num == 0) {
+        csv_write_str(file, "\"\"");
+        csv_field->num_written++;
+      }
+      else {
+        buffer[0] = '\0';
+        char buffer2[10000];
+        buffer2[0] = '\0';
+
+        for (int i = 0; i < exception_num; i++) {
+
+          const char DateOnlyName[] = "Date";
+          const char * pos1;
+          time_t t;
+
+          t = mktime(&value.literal.lit_times[i]);
+          if (t > 0) {
+	        /* Only print if date is really present */
+	        pos1 = csv_field->field.name
+	          - strlen(DateOnlyName)
+	          + strlen(csv_field->field.name);
+	        /* Write date & time, or only date? */
+	        if (pos1 >= csv_field->field.name
+	            && strcmp(pos1, DateOnlyName) == 0)
+	          write_iso_date_str(t,
+			             buffer,
+			             sizeof(buffer));
+	        else
+	          write_iso_full_time_str(t,
+				          buffer,
+				          sizeof(buffer));
+
+            strcat(buffer2, buffer);
+            strcat(buffer2, ";");
+          }
+        }
+        csv_write_str(file, buffer2);
+        csv_field->num_written++;
+      }
+    }
+    break;
+
   default:
+      error_message("Can not handle unknown field data type\n");
     break;
   }
 

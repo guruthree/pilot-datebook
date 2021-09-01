@@ -8,7 +8,7 @@ Original source: https://www.mhessler.de/pilot-datebook/index.en.html
 
 ## What is it?
 'pilot-datebook' has been intended to be the 'Swiss Army Knife' for datebook
-related data manipulation, i.e., aool to read/edit PalmOS Datebook databases.
+related data manipulation, i.e., a tool to read/edit PalmOS Datebook databases.
 
 The main strengths of pilot-datebook are the number of data formats it
 supports for import/export (including csv, plain text, Windows desktop

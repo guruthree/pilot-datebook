@@ -58,6 +58,7 @@ extern const char DATEBOOK_FIELD_REPEAT_DAY[];
 extern const char DATEBOOK_FIELD_REPEAT_WEEKSTART[];
 extern const char DATEBOOK_FIELD_REPEAT_WEEKDAYS[];
 extern const char DATEBOOK_FIELD_REPEAT_EXCEPTION_NUM[];
+extern const char DATEBOOK_FIELD_REPEAT_EXCEPTION[];
 /* Leave out repeatException for now
  * (complicated array compare)
  */
@@ -132,7 +133,8 @@ enum DATEBOOK_FIELD_TYPE {
   DATEBOOK_FIELD_INT = 1,
   DATEBOOK_FIELD_TIME = 2,
   DATEBOOK_FIELD_SECONDS = 3,
-  DATEBOOK_FIELD_STR = 4
+  DATEBOOK_FIELD_STR = 4,
+  DATEBOOK_FIELD_TIMES = 5 // multiple times for exceptions
 };
 
 
@@ -263,6 +265,7 @@ struct field_data {
     struct tm (*get_time) (struct row_data * row);
     long (*get_seconds) (struct row_data * row);
     char * (*get_str) (struct row_data * row);
+    struct tm* (*get_times) (struct row_data * row);
   } get_func;
   union {
     void (*set_long) (struct row_data * row, unsigned long new_long);
@@ -270,6 +273,7 @@ struct field_data {
     void (*set_time) (struct row_data * row, struct tm new_time);
     void (*set_seconds) (struct row_data * row, long new_seconds);
     void (*set_str) (struct row_data * row, char * new_str);
+    void (*set_times) (struct row_data * row, struct tm * new_time);
   } set_func;
 };
 
@@ -287,6 +291,7 @@ struct value_data {
     struct tm lit_time;
     long lit_seconds;
     char * lit_str;
+    struct tm * lit_times;
   } literal;
 };
 

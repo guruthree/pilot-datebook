@@ -75,6 +75,7 @@ const char DATEBOOK_FIELD_REPEAT_DAY[] = "repeatDay";
 const char DATEBOOK_FIELD_REPEAT_WEEKSTART[] = "repeatWeekstart";
 const char DATEBOOK_FIELD_REPEAT_WEEKDAYS[] = "repeatWeekdays";
 const char DATEBOOK_FIELD_REPEAT_EXCEPTION_NUM[] = "repeatExceptionNum";
+const char DATEBOOK_FIELD_REPEAT_EXCEPTION[] = "repeatException";
 /* Leave out repeatException for now
  * (complicated array compare)
  */
@@ -1462,9 +1463,12 @@ field_init (struct field_data * field, const char * field_start, const char * fi
     field->get_func.get_int = getRowRepeatExceptionNum;
     field->set_func.set_int = setRowRepeatExceptionNum;
   }
-  /* Leave out repeatException for now
-   * (complicated array compare)
-   */
+  else if (!strncmp(buffer, DATEBOOK_FIELD_REPEAT_EXCEPTION, sizeof(buffer))) {
+    field->name = DATEBOOK_FIELD_REPEAT_EXCEPTION;
+    field->type = DATEBOOK_FIELD_TIMES; /// WHAT TYPE?
+    field->get_func.get_times = getRowRepeatException;
+    field->set_func.set_times = setRowRepeatException;
+  }
   else if (!strncmp(buffer, DATEBOOK_FIELD_DESCRIPTION, sizeof(buffer))) {
     field->name = DATEBOOK_FIELD_DESCRIPTION;
     field->type = DATEBOOK_FIELD_STR;
@@ -1625,6 +1629,11 @@ row_get_field (struct row_data * row, struct field_data * field)
     result.literal.lit_str = (field->get_func.get_str) (row);
     break;
 
+  case DATEBOOK_FIELD_TIMES:
+    result.type = DATEBOOK_FIELD_TIMES;
+    result.literal.lit_times = (field->get_func.get_times) (row);
+    break;
+
   default:
     error_message("Can not get value for unknown field type\n");
   }
@@ -1661,6 +1670,10 @@ row_set_field (struct row_data * row, struct field_data * field, struct value_da
 
   case DATEBOOK_FIELD_STR:
     (field->set_func.set_str) (row, value->literal.lit_str);
+    break;
+
+  case DATEBOOK_FIELD_TIMES:
+    (field->set_func.set_times) (row, value->literal.lit_times);
     break;
 
   default:

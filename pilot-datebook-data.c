@@ -1279,13 +1279,11 @@ value_init (struct value_data * value, const char * value_start, const char * va
       }
       else {
         value->literal.lit_times = (struct tm*)calloc(exception_num, sizeof(struct tm));
-        printf("value start %i %s %i\n", len, value_start, exception_num);
         int last_pos = 0, exception_at = 0;
         for (int i = 0; i < len; i++) {
           if (value_start[i] == ';') {
             memset(date_buffer, 0, sizeof(char)*sizeof(date_buffer));
             strncpy(date_buffer, value_start + last_pos, i - last_pos);
-            printf("init value %s\n", date_buffer);
             last_pos = i+1;
 
 	          time_t t;
